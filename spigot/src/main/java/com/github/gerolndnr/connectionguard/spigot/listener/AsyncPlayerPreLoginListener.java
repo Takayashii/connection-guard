@@ -19,6 +19,8 @@ public class AsyncPlayerPreLoginListener implements Listener {
     @EventHandler
     public void onAsyncPreLogin(AsyncPlayerPreLoginEvent preLoginEvent) {
         String ipAddress = preLoginEvent.getAddress().getHostAddress();
+        String playerUuid = preLoginEvent.getUniqueId() != null ? preLoginEvent.getUniqueId().toString() : null;
+        String playerName = preLoginEvent.getName();
 
         CompletableFuture<VpnResult> vpnResultFuture;
         CompletableFuture<Optional<GeoResult>> geoResultOptionalFuture;
@@ -28,8 +30,8 @@ public class AsyncPlayerPreLoginListener implements Listener {
         // Check if ip address is in exemption lists
         if (
                 ConnectionGuardSpigotPlugin.getInstance().getConfig().getStringList("behavior.vpn.exemptions").contains(ipAddress)
-                || ConnectionGuardSpigotPlugin.getInstance().getConfig().getStringList("behavior.vpn.exemptions").contains(preLoginEvent.getUniqueId().toString())
-                || ConnectionGuardSpigotPlugin.getInstance().getConfig().getStringList("behavior.vpn.exemptions").contains(preLoginEvent.getName())
+                || (playerUuid != null && ConnectionGuardSpigotPlugin.getInstance().getConfig().getStringList("behavior.vpn.exemptions").contains(playerUuid))
+                || ConnectionGuardSpigotPlugin.getInstance().getConfig().getStringList("behavior.vpn.exemptions").contains(playerName)
         ) {
             vpnResultFuture = CompletableFuture.completedFuture(new VpnResult(ipAddress, false));
             hasVpnExemptionPermissionFuture = CompletableFuture.completedFuture(false);
