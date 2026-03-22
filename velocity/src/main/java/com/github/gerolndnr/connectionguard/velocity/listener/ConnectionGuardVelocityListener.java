@@ -22,7 +22,7 @@ public class ConnectionGuardVelocityListener {
     @Subscribe
     public EventTask onPreLogin(PreLoginEvent loginEvent) {
         String ipAddress = loginEvent.getConnection().getRemoteAddress().getHostString();
-        String playerUuid = loginEvent.getUniqueId().toString();
+        String playerUuid = loginEvent.getUniqueId() != null ? loginEvent.getUniqueId().toString() : null;
         String playerUsername = loginEvent.getUsername();
 
         CompletableFuture<VpnResult> vpnResultFuture;
@@ -31,7 +31,7 @@ public class ConnectionGuardVelocityListener {
         // Check if ip address is in exemption lists
         if (
                 ConnectionGuardVelocityPlugin.getInstance().getCgVelocityConfig().getConfig().getStringList("behavior.vpn.exemptions").contains(ipAddress)
-                        || ConnectionGuardVelocityPlugin.getInstance().getCgVelocityConfig().getConfig().getStringList("behavior.vpn.exemptions").contains(playerUuid)
+                        || (playerUuid != null && ConnectionGuardVelocityPlugin.getInstance().getCgVelocityConfig().getConfig().getStringList("behavior.vpn.exemptions").contains(playerUuid))
                         || ConnectionGuardVelocityPlugin.getInstance().getCgVelocityConfig().getConfig().getStringList("behavior.vpn.exemptions").contains(playerUsername)
         ) {
             vpnResultFuture = CompletableFuture.completedFuture(new VpnResult(ipAddress, false));
