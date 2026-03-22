@@ -77,6 +77,10 @@ This software uses the following open source packages:
 
 ## Related
 
+[Main Plugin Creator](https://github.com/gerolndnr) - GitHub Profile
+
+[Velocity / Spigot Fix](https://github.com/Takayashii) - Fixed Null in PreLoginEvent
+
 [Connection Guard Spigot Page](https://www.spigotmc.org/resources/connection-guard-vpn-and-geo-blocking-spigot-bungeecord-velocity.121509/) - Official Resource Page
 
 [LNDNR's Anti-VPN & Geo-Blocking](https://www.spigotmc.org/resources/lndnrs-anti-vpn-geo-blocking-1-16-5-1-21-x-bedrock-support.116744/) - Predecessor of Connection Guard
